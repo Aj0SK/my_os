@@ -2,13 +2,13 @@ BUILD = build
 SRC = src
 SIMULATOR = qemu-system-x86_64
 
-all: build run
+all: run
 
 prepare:
 	mkdir -p $(BUILD)
 
-build:
+build: prepare
 	nasm -f bin $(SRC)/simple_boot_sector.asm -o $(BUILD)/simple_boot_sector.bin
 
-run:
+run: build
 	$(SIMULATOR) $(BUILD)/simple_boot_sector.bin
