@@ -14,7 +14,8 @@ call print_hex
 
 jmp $
 
-%include "src/helper.asm"
+%include "src/print_string.asm"
+%include "src/print_hex.asm"
 
 HELLO_MSG:
     db "Hello World!", 0
