@@ -1,16 +1,26 @@
-mov ah, 0x0e ; tty mode
-mov al, 'H'
-int 0x10
-mov al, 'e'
-int 0x10
-mov al, 'l'
-int 0x10
-int 0x10
-mov al, 'o'
-int 0x10
+[org 0x7c00]
 
-jmp $ ; jump to current address = infinite loop
+mov bx, HELLO_MSG
+call print_string
 
-; padding and magic number
-times 510 - ($-$$) db 0
+mov bx, GOODBYE_MSG
+call print_string
+
+mov dx, 0x1fb6
+call print_hex
+
+mov dx, 0xffff
+call print_hex
+
+jmp $
+
+%include "src/helper.asm"
+
+HELLO_MSG:
+    db "Hello World!", 0
+
+GOODBYE_MSG :
+    db "Goodbye!", 0
+
+times 510-($-$$) db 0
 dw 0xaa55
