@@ -1,6 +1,8 @@
 BUILD = build
 SRC = src
 SIMULATOR = qemu-system-x86_64
+SIMULATOR_FLAGS = -fda
+
 
 all: run
 
@@ -11,4 +13,4 @@ build: prepare
 	nasm -f bin $(SRC)/simple_boot_sector.asm -o $(BUILD)/simple_boot_sector.bin
 
 run: build
-	$(SIMULATOR) $(BUILD)/simple_boot_sector.bin
+	$(SIMULATOR) $(SIMULATOR_FLAGS) $(BUILD)/simple_boot_sector.bin
