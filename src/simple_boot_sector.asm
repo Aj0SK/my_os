@@ -13,11 +13,11 @@ call switch_to_pm ; Switch to protected mode , from which
 jmp $
 ; Include our useful , hard - earned routines
 
-%include "src/disk_load.asm"
-%include "src/print_string.asm"
-%include "src/protected_mode/gdt.asm"
-%include "src/protected_mode/print_string.asm"
-%include "src/protected_mode/switch.asm"
+%include "src/boot/disk_load.asm"
+%include "src/boot/print_string.asm"
+%include "src/boot/gdt_pm.asm"
+%include "src/boot/print_string_pm.asm"
+%include "src/boot/switch_pm.asm"
 
 [bits 16]
 ; load_kernel
