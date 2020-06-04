@@ -8,12 +8,12 @@ print_hex:
     push bx
     push ax
     
-    mov bx, HEX_HELPER
+    mov bx, HEX_HELPER ; extracts first byte into cx
     mov cx, dx
     and cx, 0x000f
-    add bx, cx
-    mov al, [bx]
-    mov [HEX_OUT+5], al
+    add bx, cx          ; add cx into index in HEX_HELPER
+    mov al, [bx]        ; move character from HEX_HELPER into al
+    mov [HEX_OUT+5], al ; write character from al into output string
     
     mov bx, HEX_HELPER
     mov cx, dx
