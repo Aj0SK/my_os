@@ -3,6 +3,7 @@ SRC = src
 SIMULATOR = qemu-system-x86_64
 SIMULATOR_FLAGS = -fda
 SIMULATOR_DEBUG_FLAGS = -s -S -fda
+GCC_FLAGS = -g -ffreestanding 
 
 all: run
 
@@ -13,7 +14,7 @@ kernel_entry.o:
 	nasm $(SRC)/boot/kernel_entry.asm -f elf64 -o $(BUILD)/kernel_entry.o
 	
 kernel.o:
-	gcc -g -ffreestanding -c $(SRC)/kernel/kernel.c -o $(BUILD)/kernel.o
+	gcc $(GCC_FLAGS) -c $(SRC)/kernel/kernel.c -o $(BUILD)/kernel.o
 	
 kernel.bin: kernel.o kernel_entry.o
 	ld -o $(BUILD)/kernel.bin -Ttext 0x1000 $(BUILD)/kernel_entry.o $(BUILD)/kernel.o --oformat binary
@@ -31,5 +32,7 @@ run: prepare os-image.bin
 	$(SIMULATOR) $(SIMULATOR_FLAGS) $(BUILD)/os-image
 
 debug: prepare os-image.bin kernel.elf
-	$(SIMULATOR) $(SIMULATOR_DEBUG_FLAGS) $(BUILD)/os-image & 
-	${GDB} -ex "target remote localhost:1234" -ex "symbol-file build/kernel.elf"
+	$(SIMULATOR) $(SIMULATOR_DEBUG_FLAGS) $(BUILD)/os-image
+	#(gdb) target remote :1234
+	#(gdb) file build/kernel.elf
+	# x /s (0xf00000000b8000)
