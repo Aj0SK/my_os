@@ -19,6 +19,6 @@ print_string_pm_loop :
     add edx, 2 ; Move to next character cell in vid mem.
     jmp print_string_pm_loop ; loop around to print the next char.
 
-print_string_pm_done :
+print_string_pm_done:
     popa
-    ret ; Return from the function
+    ret

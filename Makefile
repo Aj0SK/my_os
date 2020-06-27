@@ -16,15 +16,20 @@ kernel_entry.o:
 
 ports.o:
 	gcc $(GCC_FLAGS) -c $(SRC)/drivers/ports.c -o $(BUILD)/ports.o
+
+screen.o:
+	gcc $(GCC_FLAGS) -c $(SRC)/drivers/screen.c -o $(BUILD)/screen.o
 	
 kernel.o:
 	gcc $(GCC_FLAGS) -c $(SRC)/kernel/kernel.c -o $(BUILD)/kernel.o
 	
-kernel.bin: kernel.o kernel_entry.o ports.o
-	ld -o $(BUILD)/kernel.bin -m elf_i386 -Ttext 0x1000 $(BUILD)/kernel_entry.o $(BUILD)/kernel.o $(BUILD)/ports.o --oformat binary
+kernel_dep: kernel.o kernel_entry.o ports.o screen.o
 
-kernel.elf: kernel.o kernel_entry.o ports.o
-	ld -o $(BUILD)/kernel.elf -m elf_i386 -Ttext 0x1000 $(BUILD)/kernel_entry.o $(BUILD)/kernel.o $(BUILD)/ports.o
+kernel.bin: kernel_dep
+	ld -o $(BUILD)/kernel.bin -m elf_i386 -Ttext 0x1000 $(BUILD)/*.o --oformat binary
+
+kernel.elf: kernel_dep
+	ld -o $(BUILD)/kernel.elf -m elf_i386 -Ttext 0x1000 $(BUILD)/*.o
 
 simple_boot_sector.bin:
 	nasm -f bin $(SRC)/simple_boot_sector.asm -o $(BUILD)/simple_boot_sector.bin
