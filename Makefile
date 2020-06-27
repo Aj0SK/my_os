@@ -19,11 +19,14 @@ ports.o:
 
 screen.o:
 	gcc $(GCC_FLAGS) -c $(SRC)/drivers/screen.c -o $(BUILD)/screen.o
-	
+
+util.o:
+	gcc $(GCC_FLAGS) -c $(SRC)/kernel/util.c -o $(BUILD)/util.o
+
 kernel.o:
 	gcc $(GCC_FLAGS) -c $(SRC)/kernel/kernel.c -o $(BUILD)/kernel.o
 	
-kernel_dep: kernel.o kernel_entry.o ports.o screen.o
+kernel_dep: util.o kernel.o kernel_entry.o ports.o screen.o
 
 kernel.bin: kernel_dep
 	ld -o $(BUILD)/kernel.bin -m elf_i386 -Ttext 0x1000 $(BUILD)/*.o --oformat binary
