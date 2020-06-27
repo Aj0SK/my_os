@@ -4,6 +4,7 @@ SIMULATOR = qemu-system-i386
 SIMULATOR_FLAGS = -fda
 SIMULATOR_DEBUG_FLAGS = -s -S -fda
 GCC_FLAGS = -g -ffreestanding -m32 -fno-pie
+COMPILER = gcc
 GDB = gdb
 
 all: run
@@ -15,16 +16,16 @@ kernel_entry.o:
 	nasm $(SRC)/boot/kernel_entry.asm -f elf32 -o $(BUILD)/kernel_entry.o
 
 ports.o:
-	gcc $(GCC_FLAGS) -c $(SRC)/drivers/ports.c -o $(BUILD)/ports.o
+	$(COMPILER) $(GCC_FLAGS) -c $(SRC)/drivers/ports.c -o $(BUILD)/ports.o
 
 screen.o:
-	gcc $(GCC_FLAGS) -c $(SRC)/drivers/screen.c -o $(BUILD)/screen.o
+	$(COMPILER) $(GCC_FLAGS) -c $(SRC)/drivers/screen.c -o $(BUILD)/screen.o
 
 util.o:
-	gcc $(GCC_FLAGS) -c $(SRC)/kernel/util.c -o $(BUILD)/util.o
+	$(COMPILER) $(GCC_FLAGS) -c $(SRC)/kernel/util.c -o $(BUILD)/util.o
 
 kernel.o:
-	gcc $(GCC_FLAGS) -c $(SRC)/kernel/kernel.c -o $(BUILD)/kernel.o
+	$(COMPILER) $(GCC_FLAGS) -c $(SRC)/kernel/kernel.c -o $(BUILD)/kernel.o
 	
 kernel_dep: util.o kernel.o kernel_entry.o ports.o screen.o
 

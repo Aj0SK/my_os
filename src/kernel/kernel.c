@@ -10,9 +10,10 @@ void main() {
         char str[255];
         int_to_ascii(i, str);
         kprint_at(str, 0, i);
+        hex_to_ascii(i, str);
+        kprint_at(str, 10, i);
     }
 
-    //kprint_at("Test of the scrolling 1!", 60, 24);
-    kprint("Test of the scrolling 1!\n");
+    kprint("\nTest of the scrolling 1!\n");
     kprint("Test of the scrolling 2!\n");
 }
