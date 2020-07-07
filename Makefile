@@ -10,7 +10,7 @@ GDB = gdb
 all: run
 
 prepare:
-	mkdir -p $(BUILD)
+	rm -r -f $(BUILD) && mkdir -p $(BUILD)
 
 kernel_entry.o:
 	nasm $(SRC)/boot/kernel_entry.asm -f elf32 -o $(BUILD)/kernel_entry.o
