@@ -1,10 +1,19 @@
 #include "../drivers/screen.h"
 #include "util.h"
 
-void main() {
+#include "../cpu/isr.h"
+#include "../cpu/idt.h"
+
+void main()
+{
+    isr_install();
+
+    __asm__ __volatile__("int $2");
+    __asm__ __volatile__("int $3");
+
+    /*
     clear_screen();
 
-    /* Fill up the screen */
     for (int i = 0; i < 24; ++i)
     {
         char str[255];
@@ -15,5 +24,5 @@ void main() {
     }
 
     kprint("\nTest of the scrolling 1!\n");
-    kprint("Test of the scrolling 2!\n");
+    kprint("Test of the scrolling 2!\n");*/
 }
